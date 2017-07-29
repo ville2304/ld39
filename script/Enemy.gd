@@ -8,28 +8,20 @@ func _ready():
 	pass
 
 
-func waitForInput(command):
-	return false
-
-
-# @return true if do something
-func turnPre(substep):
-	return false
-	if substep == 0:
-		get_parent().addWait(0.6)
-		return true
-	return false
-
-
-# @return true if defer
-func turnMove(substep):
-	return false
-
-
-func turnMoveDeferred(substep):
-	pass
-
-
-func turnPost(substep):
-	pass
-
+func turn(command):
+	command = round(rand_range(1, 4))
+	
+	if command == 1:
+		translate(Vector3(0, 0, -1))
+		get_parent().addWait(0.3)
+	elif command == 2:
+		translate(Vector3(0, 0, 1))
+		get_parent().addWait(0.3)
+	elif command == 3:
+		translate(Vector3(-1, 0, 0))
+		get_parent().addWait(0.3)
+	elif command == 4:
+		translate(Vector3(1, 0, 0))
+		get_parent().addWait(0.3)
+	
+	return true
