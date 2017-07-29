@@ -73,11 +73,10 @@ func turn(command):
 		return false
 	
 	__drain(mPassiveConsumption)
-	if mHealth < 100:
-		mHealth += mRepairLevel
-		get_node("/root/Node/Ui").setHealth(mHealth, 100)
-	
 	if command == 5:
+		if mHealth < 100:
+			mHealth += mRepairLevel
+			get_node("/root/Node/Ui").setHealth(mHealth, 100)
 		return true
 	
 	var newPos = getGrid()
@@ -92,13 +91,17 @@ func turn(command):
 	
 	var stuff = get_parent().get_parent().getCell(newPos)
 	if stuff[0]:
+		if mHealth < 100:
+			mHealth += mRepairLevel
+			get_node("/root/Node/Ui").setHealth(mHealth, 100)
 		__drain(mLocoConsumption)
 		set_translation(Vector3(newPos.x, 0, newPos.y))
 		get_parent().get_parent().addWait(0.1)
 	else:
-		if stuff[1] != null:
+		if stuff[1] != null && mCombatLevel > 0:
 			__attack(stuff[1])
 		else:
+			__drain(-mPassiveConsumption)
 			return false
 	return true
 
