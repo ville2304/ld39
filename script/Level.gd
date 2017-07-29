@@ -3,6 +3,11 @@ extends Node
 var mWidth
 var mHeight
 var mData
+var mPlayerStarts
+
+
+func getPlayerStarts():
+	return mPlayerStarts
 
 
 func isWalkable(cell):
@@ -32,11 +37,19 @@ func _ready():
 		mData[mWidth * i] = 1
 		mData[mWidth - 1 + mWidth * i] = 1
 	mData[5 + mWidth * 5] = 1
+	mData[2 + mWidth * 2] = 9000
+	mData[8 + mWidth * 8] = 9001
+	mData[2 + mWidth * 8] = 9001
 	
+	mPlayerStarts = []
 	for y in range(mHeight):
 		for x in range(mWidth):
-			if mData[x + mWidth * y] == 1:
+			var d = mData[x + mWidth * y]
+			if d == 1:
 				continue
+			elif d >= 9000:
+				mData[x + mWidth * y] = 0
+				mPlayerStarts.push_back(Vector2(x, y))
 			var d = q.duplicate()
 			d.set_translation(Vector3(x, 0, y))
 			add_child(d)

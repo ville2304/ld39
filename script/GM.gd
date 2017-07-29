@@ -12,7 +12,7 @@ enum Command{
 
 
 
-onready var mPlayers = get_node("Players").get_children()
+var mPlayers
 onready var mLevel = get_node("Level")
 var mIterator
 var mWait = 0
@@ -78,6 +78,22 @@ func getTarget():
 
 
 func _ready():
+	var plrs = mLevel.getPlayerStarts()
+	var pn = get_node("Players")
+	var user = preload("res://User.tscn")
+	var enemy = preload("res://Enemy.tscn")
+	for i in range(plrs.size()):
+		var pos = plrs[i]
+		var n
+		if i == 0:
+			n = user.instance()
+		else:
+			n = enemy.instance()
+		n.set_translation(Vector3(pos.x, 0, pos.y))
+		pn.add_child(n)
+	
+	mPlayers = pn.get_children()
+	
 	__newTurn()
 	set_process(true)
 
