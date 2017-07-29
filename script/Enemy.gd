@@ -2,10 +2,10 @@ extends Spatial
 
 
 var mTarget = null
-
+var mHealth
 
 func _ready():
-	pass
+	mHealth = 2
 
 
 func getGrid():
@@ -17,10 +17,15 @@ func uke(dmg):
 	var ap = get_node("AnimationPlayer")
 	get_parent().get_parent().addWait(ap.get_animation("uke").get_length())
 	ap.play("uke")
+	mHealth -= dmg
 
 
 func turn(command):
 	var gm = get_parent().get_parent()
+	if mHealth <= 0:
+		__die()
+		return true
+	
 	if mTarget == null:
 		mTarget = gm.getTarget()
 	
@@ -69,4 +74,17 @@ func __attack(gm, target):
 
 func _applyAttack():
 	mTarget.uke(1)
+
+
+func __die():
+	var ap = get_node("AnimationPlayer")
+	ap.connect("finished", self, "_applyDie", [], ap.CONNECT_ONESHOT)
+	ap.play("die")
+	get_parent().get_parent().addWait(ap.get_animation("die").get_length())
+
+
+func _applyDie():
+	get_parent().get_parent().kill(self)
+
+
 

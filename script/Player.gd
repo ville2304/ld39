@@ -2,7 +2,7 @@ extends Spatial
 
 
 var mTarget
-
+var mHealth = 2
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -11,6 +11,7 @@ func _ready():
 
 
 func uke(dmg):
+	mHealth -= dmg
 	var ap = get_node("AnimationPlayer")
 	get_parent().get_parent().addWait(ap.get_animation("uke").get_length())
 	ap.play("uke")
@@ -22,6 +23,10 @@ func getGrid():
 
 
 func turn(command):
+	if mHealth <= 0:
+		__die()
+		return true
+	
 	if command == 0:
 		return false
 	elif command == 5:
@@ -59,3 +64,16 @@ func __attack(target):
 func _applyAttack():
 	mTarget.uke(1)
 	pass
+
+
+func __die():
+	var ap = get_node("AnimationPlayer")
+	ap.connect("finished", self, "_applyDie", [], ap.CONNECT_ONESHOT)
+	ap.play("die")
+	get_parent().get_parent().addWait(ap.get_animation("die").get_length())
+
+
+func _applyDie():
+	get_parent().get_parent().kill(self)
+
+

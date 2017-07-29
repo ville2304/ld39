@@ -32,6 +32,12 @@ func getCell(cell):
 	return [true, null]
 
 
+func kill(player):
+	get_node("Players").remove_child(player)
+	mPlayers = get_node("Players").get_children()
+
+
+
 func raycast(x0, y0, x1, y1, maxLength):
 	var xDist = abs(x1 - x0)
 	var yDist = -abs(y1 - y0)
