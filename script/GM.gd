@@ -93,6 +93,12 @@ func getTarget():
 func applyPowerSettings(settings):
 	mPlayers[0].applyPowerSettings(settings)
 	# TODO: Invoke global effects
+	if settings["audio"] != 0:
+		get_node("../Music").set_volume(1)
+		get_node("../MusicGlitch").set_volume(0)
+	else:
+		get_node("../Music").set_volume(0)
+		get_node("../MusicGlitch").set_volume(1)
 
 
 
