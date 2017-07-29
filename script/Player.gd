@@ -3,6 +3,8 @@ extends Spatial
 
 var mTarget
 var mHealth = 2
+var mPower = 10
+
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -26,6 +28,8 @@ func turn(command):
 	if mHealth <= 0:
 		__die()
 		return true
+	if mPower <= 0:
+		return true
 	
 	if get_parent().get_parent().isGoal(getGrid()):
 		get_parent().get_parent().victory()
@@ -37,6 +41,7 @@ func turn(command):
 	if command == 0:
 		return false
 	elif command == 5:
+		__drain(1)
 		return true
 	
 	var newPos = getGrid()
@@ -51,6 +56,7 @@ func turn(command):
 	
 	var stuff = get_parent().get_parent().getCell(newPos)
 	if stuff[0]:
+		__drain(1)
 		set_translation(Vector3(newPos.x, 0, newPos.y))
 		get_parent().get_parent().addWait(0.1)
 	else:
@@ -61,11 +67,16 @@ func turn(command):
 	return true
 
 
+func __drain(amount):
+	mPower -= amount
+
+
 func __attack(target):
 	mTarget = target
 	var ap = get_node("AnimationPlayer")
 	ap.play("attack")
 	get_parent().get_parent().addWait(ap.get_animation("attack").get_length())
+	__drain(1)
 
 
 func _applyAttack():
