@@ -7,6 +7,7 @@ var mPower = 100
 var mPassiveConsumption = 0
 var mLocoConsumption = 0
 var mCombatConsumption = 0
+var mTotalConsumption = 0
 
 var mCoreLevel = 0
 var mRepairLevel = 0
@@ -17,9 +18,15 @@ func _ready():
 	get_node("/root/Node/Ui").setHealth(mHealth, 100)
 
 
+func setPower(p):
+	mPower = p
+
+
 func applyPowerSettings(settings):
-	mPassiveConsumption = settings["core"] + settings["visual"] + settings["audio"] + settings["repair"]
+	mPassiveConsumption = settings["core"] + settings["audio"] + settings["repair"]
 	mPassiveConsumption /= 3
+	mPassiveConsumption += settings["visual"]
+	
 	mCoreLevel = settings["core"]
 	mRepairLevel = settings["repair"]
 	
@@ -59,6 +66,7 @@ func turn(command):
 		var ap = get_node("AnimationPlayer")
 		get_parent().get_parent().addWait(ap.get_animation("victory").get_length())
 		ap.play("victory")
+		prints("Total consumption", mTotalConsumption)
 		return false
 	
 	if command == 0:
@@ -96,6 +104,7 @@ func turn(command):
 
 
 func __drain(amount):
+	mTotalConsumption += amount
 	mPower -= amount
 	get_node("/root/Node/Ui").setPower(mPower, 100, mPassiveConsumption)
 

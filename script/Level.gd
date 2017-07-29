@@ -5,6 +5,7 @@ var mHeight
 var mData
 var mPlayerStarts
 var mGoal
+var mPower
 
 
 func getPlayerStarts():
@@ -12,6 +13,9 @@ func getPlayerStarts():
 
 func getGoal():
 	return mGoal
+
+func getPower():
+	return mPower
 
 
 func isWalkable(cell):
@@ -43,8 +47,9 @@ func loadLevel(l):
 	
 	if l >= LEVEL.size():
 		l = l % LEVEL.size()
-		
-	var ls = LEVEL[l].strip_edges().split("\n")
+	
+	mPower = LEVEL[l]["power"]
+	var ls = LEVEL[l]["data"].strip_edges().split("\n")
 	mWidth = ls[0].length()
 	mHeight = ls.size()
 	mData = IntArray()
@@ -75,13 +80,18 @@ func loadLevel(l):
 
 
 const LEVEL = [
+{"power":31,
+"data":
 """
 1g1
 001
 101
 101
 00p
-""",
+"""
+},
+{"power":5,
+"data":
 """
 1e01
 0110
@@ -89,7 +99,10 @@ const LEVEL = [
 1101
 1011
 g00p
-""",
+"""
+},
+{"power":100,
+"data":
 """
 1111111111
 1e001g00p1
@@ -101,7 +114,10 @@ g00p
 1111011111
 1e000000e1
 1111111111
-""",
+"""
+},
+{"power":100,
+"data":
 """
 1111111111
 10001000p1
@@ -114,6 +130,7 @@ g00p
 1e100000e1
 1111111111
 """
+}
 ]
 
 

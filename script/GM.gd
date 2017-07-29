@@ -139,6 +139,7 @@ func __startLevel():
 		var n
 		if i == 0:
 			n = user.instance()
+			n.setPower(mLevel.getPower())
 		else:
 			n = enemy.instance()
 		n.set_translation(Vector3(pos.x, 0, pos.y))
@@ -167,7 +168,7 @@ func _nextLevel():
 
 func _ready():
 	mPressTime = -1
-	mCurrentLevel = 2
+	mCurrentLevel = 0
 	__reset()
 	mLevel.loadLevel(mCurrentLevel)
 	__startLevel()
