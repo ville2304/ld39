@@ -13,14 +13,20 @@ enum Command{
 
 
 var mPlayers
+var mGoal
 onready var mLevel = get_node("Level")
 var mIterator
 var mWait = 0
 var mCommand = Command.NONE
+var mVictory = false
 
 
 func addWait(seconds):
 	mWait = max(mWait, seconds)
+
+
+func isGoal(cell):
+	 return cell == mLevel.getGoal()
 
 
 func getCell(cell):
@@ -35,6 +41,10 @@ func getCell(cell):
 func kill(player):
 	get_node("Players").remove_child(player)
 	mPlayers = get_node("Players").get_children()
+
+
+func victory():
+	mVictory = true
 
 
 
@@ -94,6 +104,12 @@ func _ready():
 	
 	mPlayers = pn.get_children()
 	
+	var goalPos = mLevel.getGoal()
+	mGoal = TestCube.new()
+	mGoal.set_translation(Vector3(goalPos.x + .5, 0.2, goalPos.y + .5))
+	mGoal.set_scale(Vector3(.3, .3, .3))
+	add_child(mGoal)
+	
 	__newTurn()
 	set_process(true)
 
@@ -115,13 +131,16 @@ func _process(delta):
 	if mWait > 0:
 		mWait -= delta
 	else:
+		if mVictory:
+			print("Victory!")
+			set_process(false)
+			return
 		if mIterator >= mPlayers.size():
 			__newTurn()
 		if mPlayers[mIterator].turn(mCommand):
 			mIterator += 1
 
 
-
 func __newTurn():
-	print("turn start")
 	mIterator = 0
+	mVictory = false

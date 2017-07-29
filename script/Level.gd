@@ -4,10 +4,14 @@ var mWidth
 var mHeight
 var mData
 var mPlayerStarts
+var mGoal
 
 
 func getPlayerStarts():
 	return mPlayerStarts
+
+func getGoal():
+	return mGoal
 
 
 func isWalkable(cell):
@@ -28,7 +32,6 @@ func _ready():
 	mHeight = ls.size()
 	mData = IntArray()
 	mData.resize(mWidth * mHeight)
-	print(mData.size())
 	
 	mPlayerStarts = []
 	for y in range(mHeight):
@@ -43,6 +46,9 @@ func _ready():
 			elif d == "e":
 				d = 0
 				mPlayerStarts.push_back(Vector2(x, y))
+			elif d == "g":
+				d = 0
+				mGoal = Vector2(x, y)
 			else:
 				d = 0
 			mData[x + mWidth * y] = d
@@ -55,7 +61,7 @@ func _ready():
 const LEVEL = [
 """
 1111111111
-1e001000p1
+1e001g00p1
 1000100001
 1000100001
 1000100001

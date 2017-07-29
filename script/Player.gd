@@ -27,6 +27,10 @@ func turn(command):
 		__die()
 		return true
 	
+	if get_parent().get_parent().isGoal(getGrid()):
+		get_parent().get_parent().victory()
+		return false
+	
 	if command == 0:
 		return false
 	elif command == 5:
