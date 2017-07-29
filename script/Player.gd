@@ -38,7 +38,7 @@ func applyPowerSettings(settings):
 	mCombatConsumption /= 3
 	mCombatLevel = settings["combat"]
 	
-	get_node("/root/Node/Ui").setPower(mPower, 100, mPassiveConsumption)
+	get_node("/root/Node/Ui").setPower(mPower, mPassiveConsumption)
 
 
 func uke(dmg):
@@ -113,7 +113,7 @@ func turn(command):
 func __drain(amount):
 	mTotalConsumption += amount
 	mPower -= amount
-	get_node("/root/Node/Ui").setPower(mPower, 100, mPassiveConsumption)
+	get_node("/root/Node/Ui").setPower(mPower, mPassiveConsumption)
 
 
 func __attack(target):

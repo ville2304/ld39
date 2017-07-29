@@ -1,8 +1,8 @@
 extends Control
 
 
-func setPower(current, maxx, consumption):
-	get_node("LbPower").set_text("Power: %d/%d (-%d)" % [max(0, current), maxx, consumption])
+func setPower(current, consumption):
+	get_node("LbPower").set_text("Power: %d (-%d)" % [max(0, current), consumption])
 
 
 func setHealth(current, maxx):
