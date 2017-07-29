@@ -16,6 +16,7 @@ func _ready():
 	q.set_size(Vector2(.95, .95))
 	q.set_axis(1)
 	q.set_offset(Vector2(0.5, 0.5))
+	q.set_name("asd")
 	
 	mWidth = 10
 	mHeight = 10

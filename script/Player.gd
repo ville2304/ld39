@@ -1,10 +1,19 @@
 extends Spatial
 
 
+var mTarget
+
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	pass
+
+
+func uke(dmg):
+	var ap = get_node("AnimationPlayer")
+	get_parent().get_parent().addWait(ap.get_animation("uke").get_length())
+	ap.play("uke")
 
 
 func getGrid():
@@ -15,6 +24,8 @@ func getGrid():
 func turn(command):
 	if command == 0:
 		return false
+	elif command == 5:
+		return true
 	
 	var newPos = getGrid()
 	if command == 1:
@@ -27,8 +38,24 @@ func turn(command):
 		newPos.x += 1
 	
 	var stuff = get_parent().get_parent().getCell(newPos)
-	if !stuff[0]:
-		return false
-	set_translation(Vector3(newPos.x, 0, newPos.y))
-	get_parent().get_parent().addWait(0.1)
+	if stuff[0]:
+		set_translation(Vector3(newPos.x, 0, newPos.y))
+		get_parent().get_parent().addWait(0.1)
+	else:
+		if stuff[1] != null:
+			__attack(stuff[1])
+		else:
+			return false
 	return true
+
+
+func __attack(target):
+	mTarget = target
+	var ap = get_node("AnimationPlayer")
+	ap.play("attack")
+	get_parent().get_parent().addWait(ap.get_animation("attack").get_length())
+
+
+func _applyAttack():
+	mTarget.uke(1)
+	pass

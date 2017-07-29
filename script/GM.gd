@@ -6,7 +6,8 @@ enum Command{
 	NORTH,
 	SOUTH,
 	WEST,
-	EAST
+	EAST,
+	WAIT
 }
 
 
@@ -31,6 +32,44 @@ func getCell(cell):
 	return [true, null]
 
 
+func raycast(x0, y0, x1, y1, maxLength):
+	var xDist = abs(x1 - x0)
+	var yDist = -abs(y1 - y0)
+	var xStep
+	if x0 < x1: xStep = 1
+	else: xStep = -1
+	
+	var yStep
+	if y0 < y1: yStep = 1
+	else: yStep = -1
+	
+	var error = xDist + yDist
+	var go = null
+	var l = 0
+	while x0 != x1 || y0 != y1:
+		l+=1
+		if l > maxLength:
+			return null
+		if 2 * error - yDist > xDist - 2 * error:
+			error+= yDist
+			x0+= xStep
+		else:
+			error+= xDist
+			y0+= yStep
+		if go == null:
+			go = Vector2(x0, y0)
+		
+		if !mLevel.isWalkable(Vector2(x0, y0)):
+			return null
+	return go
+
+
+func getTarget():
+	return mPlayers[0]
+
+
+
+
 
 func _ready():
 	__newTurn()
@@ -46,6 +85,8 @@ func _process(delta):
 		mCommand = Command.WEST
 	elif Input.is_key_pressed(KEY_RIGHT):
 		mCommand = Command.EAST
+	elif Input.is_key_pressed(KEY_Z):
+		mCommand = Command.WAIT
 	else:
 		mCommand = Command.NONE
 	
@@ -60,4 +101,5 @@ func _process(delta):
 
 
 func __newTurn():
+	print("turn start")
 	mIterator = 0
