@@ -80,7 +80,7 @@ func loadLevel(l):
 
 
 const LEVEL = [
-{"power":31,
+{"power":32,
 "data":
 """
 1g1
@@ -90,7 +90,7 @@ const LEVEL = [
 00p
 """
 },
-{"power":5,
+{"power":50,
 "data":
 """
 1e01

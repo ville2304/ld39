@@ -12,6 +12,7 @@ enum Command{
 }
 
 const LONG_PRESS = 0.5
+const DEFAULT_SETTINGS = {"core": 3, "visual": 3, "audio": 3, "repair": 3, "loco": 3, "combat":3}
 var DEAD_ZONE = 100
 
 
@@ -26,7 +27,7 @@ var mCurrentLevel
 var mTouchDown = Vector2()
 var mPressTime = 0
 var mGlitchPlayers = false
-var mPowerSettings = {"core": 3, "visual": 3, "audio": 3, "repair": 3, "loco": 3, "combat":3}
+var mPowerSettings = DEFAULT_SETTINGS
 
 
 func addWait(seconds):
@@ -117,12 +118,18 @@ func applyPowerSettings(settings):
 
 
 func openSwitch():
-	get_node("../SwitchMenu").show()
+	get_node("../SwitchMenu").open(mPowerSettings)
 	set_process(false)
 
 
 func closeSwitch():
 	set_process(true)
+
+
+func resetLevel():
+	mCurrentLevel -= 1
+	get_node("../AnimationPlayer").play("changeLevel")
+	set_process(false)
 
 
 
@@ -163,7 +170,7 @@ func __startLevel():
 	mGoal.set_scale(Vector3(.3, .3, .3))
 	add_child(mGoal)
 	
-	applyPowerSettings(mPowerSettings)
+	applyPowerSettings(DEFAULT_SETTINGS)
 	
 	__newTurn()
 	set_process(true)
@@ -178,7 +185,7 @@ func _nextLevel():
 
 func _ready():
 	mPressTime = -1
-	mCurrentLevel = 2
+	mCurrentLevel = 0
 	__reset()
 	mLevel.loadLevel(mCurrentLevel)
 	__startLevel()
@@ -199,6 +206,8 @@ func _unhandled_input(event):
 			mCommand = Command.WAIT
 		elif event.scancode == KEY_X:
 			mCommand = Command.SWITCH
+		elif event.scancode == KEY_R:
+			resetLevel()
 		else:
 			mCommand = Command.NONE
 	
@@ -213,8 +222,10 @@ func _unhandled_input(event):
 			elif abs(d.x) < DEAD_ZONE / 2 && abs(d.y) >= DEAD_ZONE:
 				mCommand = Command.SOUTH if sign(d.y) < 0 else Command.NORTH
 			else:
-				if mPressTime >= LONG_PRESS:
+				if mPressTime >= LONG_PRESS * 2:
 					mCommand = Command.WAIT
+				elif mPressTime >= LONG_PRESS:
+					mCommand = Command.SWITCH
 				else:
 					mCommand = Command.NONE
 	elif event.type == InputEvent.MOUSE_MOTION:

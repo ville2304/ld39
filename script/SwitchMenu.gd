@@ -7,39 +7,38 @@ onready var mSwRepair = get_node("SwRepair")
 onready var mSwLoco = get_node("SwLoco")
 onready var mSwCombat = get_node("SwCombat")
 
-var mSettings
+
+func __restore(settings):
+	mSwCore.set_pressed(true if settings["core"] > 0 else false)
+	#mSwVisual.set_pressed(true if settings["visual"] > 0 else false)
+	mSwVisual.set_val(settings["visual"])
+	mSwAudio.set_pressed(true if settings["audio"] > 0 else false)
+	mSwRepair.set_pressed(true if settings["repair"] > 0 else false)
+	mSwLoco.set_pressed(true if settings["loco"] > 0 else false)
+	mSwCombat.set_pressed(true if settings["combat"] > 0 else false)
 
 
-func _ready():
-	mSettings = {"core": 3, "visual": 3, "audio": 3, "repair": 3, "loco": 3, "combat": 3}
-
-
-func __restore():
-	mSwCore.set_pressed(true if mSettings["core"] > 0 else false)
-	#mSwVisual.set_pressed(true if mSettings["visual"] > 0 else false)
-	mSwVisual.set_val(mSettings["visual"])
-	mSwAudio.set_pressed(true if mSettings["audio"] > 0 else false)
-	mSwRepair.set_pressed(true if mSettings["repair"] > 0 else false)
-	mSwLoco.set_pressed(true if mSettings["loco"] > 0 else false)
-	mSwCombat.set_pressed(true if mSettings["combat"] > 0 else false)
+func open(s):
+	__restore(s)
+	show()
 
 
 func _on_Cancel_pressed():
-	__restore()
 	get_node("/root/Node/GM").closeSwitch()
 	hide()
 
 
 func _on_Apply_pressed():
-	mSettings["core"] = 3 if mSwCore.is_pressed() else 0
-	#mSettings["visual"] = 3 if mSwVisual.is_pressed() else 0
-	mSettings["visual"] = mSwVisual.get_value()
-	mSettings["audio"] = 3 if mSwAudio.is_pressed() else 0
-	mSettings["repair"] = 3 if mSwRepair.is_pressed() else 0
-	mSettings["loco"] = 3 if mSwLoco.is_pressed() else 0
-	mSettings["combat"] = 3 if mSwCombat.is_pressed() else 0
+	var settings = {}
+	settings["core"] = 3 if mSwCore.is_pressed() else 0
+	#settings["visual"] = 3 if mSwVisual.is_pressed() else 0
+	settings["visual"] = mSwVisual.get_value()
+	settings["audio"] = 3 if mSwAudio.is_pressed() else 0
+	settings["repair"] = 3 if mSwRepair.is_pressed() else 0
+	settings["loco"] = 3 if mSwLoco.is_pressed() else 0
+	settings["combat"] = 3 if mSwCombat.is_pressed() else 0
 	
 	var gm = get_node("/root/Node/GM")
-	gm.applyPowerSettings(mSettings)
+	gm.applyPowerSettings(settings)
 	gm.closeSwitch()
 	hide()

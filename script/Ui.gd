@@ -12,3 +12,7 @@ func setHealth(current, maxx):
 
 func _on_Button_pressed():
 	get_node("../SwitchMenu").show()
+
+
+func _on_BtnReset_pressed():
+	get_node("../GM").resetLevel()
