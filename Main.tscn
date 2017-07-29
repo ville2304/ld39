@@ -290,6 +290,7 @@ flat = false
 
 [node name="Cancel" type="Button" parent="SwitchMenu"]
 
+visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -323,7 +324,6 @@ max_lines_visible = -1
 
 [node name="Ui" type="Control" parent="."]
 
-editor/display_folded = true
 focus/ignore_mouse = true
 focus/stop_mouse = false
 size_flags/horizontal = 2
@@ -366,6 +366,7 @@ max_lines_visible = -1
 
 [node name="Button" type="Button" parent="Ui"]
 
+visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2

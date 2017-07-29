@@ -7,7 +7,8 @@ enum Command{
 	SOUTH,
 	WEST,
 	EAST,
-	WAIT
+	WAIT,
+	SWITCH
 }
 
 const LONG_PRESS = 0.5
@@ -115,6 +116,15 @@ func applyPowerSettings(settings):
 		get_node("../MusicGlitch").set_volume(1)
 
 
+func openSwitch():
+	get_node("../SwitchMenu").show()
+	set_process(false)
+
+
+func closeSwitch():
+	set_process(true)
+
+
 
 func __reset():
 	if mGoal != null:
@@ -187,6 +197,8 @@ func _unhandled_input(event):
 			mCommand = Command.EAST
 		elif event.scancode == KEY_Z:
 			mCommand = Command.WAIT
+		elif event.scancode == KEY_X:
+			mCommand = Command.SWITCH
 		else:
 			mCommand = Command.NONE
 	

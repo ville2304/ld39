@@ -26,6 +26,7 @@ func __restore():
 
 func _on_Cancel_pressed():
 	__restore()
+	get_node("/root/Node/GM").closeSwitch()
 	hide()
 
 
@@ -38,5 +39,7 @@ func _on_Apply_pressed():
 	mSettings["loco"] = 3 if mSwLoco.is_pressed() else 0
 	mSettings["combat"] = 3 if mSwCombat.is_pressed() else 0
 	
-	get_node("/root/Node/GM").applyPowerSettings(mSettings)
+	var gm = get_node("/root/Node/GM")
+	gm.applyPowerSettings(mSettings)
+	gm.closeSwitch()
 	hide()

@@ -101,7 +101,7 @@ const LEVEL = [
 g00p
 """
 },
-{"power":100,
+{"power":500,
 "data":
 """
 1111111111
