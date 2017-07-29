@@ -48,6 +48,7 @@ func turn(command):
 
 func __roam(gm):
 	var newPos
+	var tries = 0
 	while true:
 		var command = round(rand_range(1, 4))
 		newPos = getGrid()
@@ -62,6 +63,9 @@ func __roam(gm):
 		var stuff = gm.getCell(newPos)
 		if stuff[0]:
 			break
+		tries += 1
+		if tries > 20:
+			return true
 	set_translation(Vector3(newPos.x, 0, newPos.y))
 	gm.addWait(0.1)
 
