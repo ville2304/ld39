@@ -10,6 +10,8 @@ enum Command{
 	WAIT
 }
 
+const LONG_PRESS = 0.5
+var DEAD_ZONE = 100
 
 
 var mPlayers
@@ -20,6 +22,8 @@ var mWait = 0
 var mCommand = Command.NONE
 var mVictory = false
 var mCurrentLevel
+var mTouchDown = Vector2()
+var mPressTime = 0
 
 
 func addWait(seconds):
@@ -131,26 +135,55 @@ func _nextLevel():
 
 
 func _ready():
+	mPressTime = -1
 	mCurrentLevel = 0
 	__reset()
 	mLevel.loadLevel(mCurrentLevel)
 	__startLevel()
+	set_process_unhandled_input(true)
+
+
+func _unhandled_input(event):
+	if event.type == InputEvent.KEY && event.is_pressed():
+		if event.scancode == KEY_UP:
+			mCommand = Command.NORTH
+		elif event.scancode == KEY_DOWN:
+			mCommand = Command.SOUTH
+		elif event.scancode == KEY_LEFT:
+			mCommand = Command.WEST
+		elif event.scancode == KEY_RIGHT:
+			mCommand = Command.EAST
+		elif event.scancode == KEY_Z:
+			mCommand = Command.WAIT
+		else:
+			mCommand = Command.NONE
+	
+	if event.type == InputEvent.MOUSE_BUTTON:
+		if event.is_pressed():
+			mTouchDown = event.pos
+			mPressTime = 0
+		else:
+			var d = mTouchDown - event.pos
+			if abs(d.y) < DEAD_ZONE / 2 && abs(d.x) >= DEAD_ZONE:
+				mCommand = Command.EAST if sign(d.x) < 0 else Command.WEST
+			elif abs(d.x) < DEAD_ZONE / 2 && abs(d.y) >= DEAD_ZONE:
+				mCommand = Command.SOUTH if sign(d.y) < 0 else Command.NORTH
+			else:
+				if mPressTime >= LONG_PRESS:
+					mCommand = Command.WAIT
+				else:
+					mCommand = Command.NONE
+	elif event.type == InputEvent.MOUSE_MOTION:
+		var d = mTouchDown - event.pos
+		d = max(abs(d.x), abs(d.y))
+		if d > DEAD_ZONE:
+			mPressTime = -1
+
 
 
 func _process(delta):
-	if Input.is_key_pressed(KEY_UP):
-		mCommand = Command.NORTH
-	elif Input.is_key_pressed(KEY_DOWN):
-		mCommand = Command.SOUTH
-	elif Input.is_key_pressed(KEY_LEFT):
-		mCommand = Command.WEST
-	elif Input.is_key_pressed(KEY_RIGHT):
-		mCommand = Command.EAST
-	elif Input.is_key_pressed(KEY_Z):
-		mCommand = Command.WAIT
-	else:
-		mCommand = Command.NONE
-	
+	if mPressTime >= 0:
+		mPressTime += delta
 	if mWait > 0:
 		mWait -= delta
 	else:
@@ -167,3 +200,4 @@ func _process(delta):
 func __newTurn():
 	mIterator = 0
 	mVictory = false
+	mCommand = Command.NONE

@@ -38,7 +38,7 @@ func loadLevel(l):
 	q.set_name("asd")
 	
 	if l >= LEVEL.size():
-		l = 0
+		l = l % LEVEL.size()
 		
 	var ls = LEVEL[l].strip_edges().split("\n")
 	mWidth = ls[0].length()
