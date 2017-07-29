@@ -8,20 +8,28 @@ func _ready():
 	pass
 
 
+func getGrid():
+	var trans = get_translation()
+	return Vector2(floor(trans.x), floor(trans.z))
+
+
 func turn(command):
-	command = round(rand_range(1, 4))
-	
-	if command == 1:
-		translate(Vector3(0, 0, -1))
-		get_parent().addWait(0.3)
-	elif command == 2:
-		translate(Vector3(0, 0, 1))
-		get_parent().addWait(0.3)
-	elif command == 3:
-		translate(Vector3(-1, 0, 0))
-		get_parent().addWait(0.3)
-	elif command == 4:
-		translate(Vector3(1, 0, 0))
-		get_parent().addWait(0.3)
-	
+	var newPos
+	while true:
+		command = round(rand_range(1, 4))
+		newPos = getGrid()
+		if command == 1:
+			newPos.y -= 1
+		elif command == 2:
+			newPos.y += 1
+		elif command == 3:
+			newPos.x -= 1
+		elif command == 4:
+			newPos.x += 1
+		
+		var stuff = get_parent().get_parent().getCell(newPos)
+		if stuff[0]:
+			break
+	set_translation(Vector3(newPos.x, 0, newPos.y))
+	get_parent().get_parent().addWait(0.1)
 	return true
