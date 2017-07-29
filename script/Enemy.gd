@@ -5,7 +5,7 @@ var mTarget = null
 var mHealth
 
 func _ready():
-	mHealth = 2
+	mHealth = 50
 
 
 func getGrid():
@@ -77,7 +77,7 @@ func __attack(gm, target):
 
 
 func _applyAttack():
-	mTarget.uke(1)
+	mTarget.uke(13)
 
 
 func __die():

@@ -2,7 +2,7 @@ extends Spatial
 
 
 var mTarget
-var mHealth = 2
+var mHealth = 100
 var mPower = 100
 var mPassiveConsumption = 0
 var mLocoConsumption = 0
@@ -109,7 +109,7 @@ func __attack(target):
 
 
 func _applyAttack():
-	mTarget.uke(1)
+	mTarget.uke(10 * mCombatLevel)
 	pass
 
 

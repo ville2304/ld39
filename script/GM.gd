@@ -25,7 +25,7 @@ var mCurrentLevel
 var mTouchDown = Vector2()
 var mPressTime = 0
 var mGlitchPlayers = false
-
+var mPowerSettings = {"core": 3, "visual": 3, "audio": 3, "repair": 3, "loco": 3, "combat":3}
 
 
 func addWait(seconds):
@@ -93,6 +93,7 @@ func getTarget():
 
 
 func applyPowerSettings(settings):
+	mPowerSettings = settings
 	mPlayers[0].applyPowerSettings(settings)
 	# TODO: Invoke global effects
 	get_node("../CameraController").fix()
@@ -150,6 +151,8 @@ func __startLevel():
 	mGoal.set_translation(Vector3(goalPos.x + .5, 0.2, goalPos.y + .5))
 	mGoal.set_scale(Vector3(.3, .3, .3))
 	add_child(mGoal)
+	
+	applyPowerSettings(mPowerSettings)
 	
 	__newTurn()
 	set_process(true)
