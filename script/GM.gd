@@ -93,6 +93,11 @@ func getTarget():
 func applyPowerSettings(settings):
 	mPlayers[0].applyPowerSettings(settings)
 	# TODO: Invoke global effects
+	if settings["visual"] != 0:
+		get_node("../CameraController").fix()
+	else:
+		get_node("../CameraController").glitch()
+	
 	if settings["audio"] != 0:
 		get_node("../Music").set_volume(1)
 		get_node("../MusicGlitch").set_volume(0)
@@ -113,6 +118,9 @@ func __reset():
 
 
 func __startLevel():
+	var cn = mLevel.getCenter()
+	get_node("../CameraController").center(cn[0], cn[1], cn[2], cn[3])
+	
 	var pn = get_node("Players")
 	var plrs = mLevel.getPlayerStarts()
 	var user = preload("res://User.tscn")

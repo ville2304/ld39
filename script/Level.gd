@@ -29,6 +29,10 @@ func reset():
 	mHeight = 0
 
 
+func getCenter():
+	return [mWidth / 2.0, mHeight / 2.0, mWidth, mHeight]
+
+
 func loadLevel(l):
 	reset()
 	var q = Quad.new()
