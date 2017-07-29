@@ -71,6 +71,9 @@ func turn(command):
 	
 	if command == 0:
 		return false
+	if mCoreLevel < 3:
+		if randf() > 0.4:
+			command = round(rand_range(1, 5))
 	
 	__drain(mPassiveConsumption)
 	if command == 5:
@@ -94,9 +97,10 @@ func turn(command):
 		if mHealth < 100:
 			mHealth += mRepairLevel
 			get_node("/root/Node/Ui").setHealth(mHealth, 100)
-		__drain(mLocoConsumption)
-		set_translation(Vector3(newPos.x, 0, newPos.y))
-		get_parent().get_parent().addWait(0.1)
+		if mLocoLevel > 0:
+			__drain(mLocoConsumption)
+			set_translation(Vector3(newPos.x, 0, newPos.y))
+			get_parent().get_parent().addWait(0.1)
 	else:
 		if stuff[1] != null && mCombatLevel > 0:
 			__attack(stuff[1])

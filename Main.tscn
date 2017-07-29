@@ -117,6 +117,7 @@ autoplay = ""
 
 [node name="SwitchMenu" type="Panel" parent="."]
 
+editor/display_folded = true
 visibility/visible = false
 anchor/right = 1
 anchor/bottom = 1
