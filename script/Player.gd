@@ -3,17 +3,40 @@ extends Spatial
 
 var mTarget
 var mHealth = 2
-var mPower = 10
+var mPower = 100
+var mPassiveConsumption = 0
+var mLocoConsumption = 0
+var mCombatConsumption = 0
 
+var mCoreLevel = 0
+var mRepairLevel = 0
+var mLocoLevel = 0
+var mCombatLevel = 0
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass
+	get_node("/root/Node/Ui").setHealth(mHealth, 100)
+
+
+func applyPowerSettings(settings):
+	mPassiveConsumption = settings["core"] + settings["visual"] + settings["audio"] + settings["repair"]
+	mPassiveConsumption /= 3
+	mCoreLevel = settings["core"]
+	mRepairLevel = settings["repair"]
+	
+	mLocoConsumption = settings["loco"]
+	mLocoConsumption /= 3
+	mLocoLevel = settings["loco"]
+	
+	mCombatConsumption = settings["combat"]
+	mCombatConsumption /= 3
+	mCombatLevel = settings["combat"]
+	
+	get_node("/root/Node/Ui").setPower(mPower, 100, mPassiveConsumption)
 
 
 func uke(dmg):
 	mHealth -= dmg
+	get_node("/root/Node/Ui").setHealth(mHealth, 100)
 	var ap = get_node("AnimationPlayer")
 	get_parent().get_parent().addWait(ap.get_animation("uke").get_length())
 	ap.play("uke")
@@ -40,8 +63,13 @@ func turn(command):
 	
 	if command == 0:
 		return false
-	elif command == 5:
-		__drain(1)
+	
+	__drain(mPassiveConsumption)
+	if mHealth < 100:
+		mHealth += mRepairLevel
+		get_node("/root/Node/Ui").setHealth(mHealth, 100)
+	
+	if command == 5:
 		return true
 	
 	var newPos = getGrid()
@@ -56,7 +84,7 @@ func turn(command):
 	
 	var stuff = get_parent().get_parent().getCell(newPos)
 	if stuff[0]:
-		__drain(1)
+		__drain(mLocoConsumption)
 		set_translation(Vector3(newPos.x, 0, newPos.y))
 		get_parent().get_parent().addWait(0.1)
 	else:
@@ -69,6 +97,7 @@ func turn(command):
 
 func __drain(amount):
 	mPower -= amount
+	get_node("/root/Node/Ui").setPower(mPower, 100, mPassiveConsumption)
 
 
 func __attack(target):
@@ -76,7 +105,7 @@ func __attack(target):
 	var ap = get_node("AnimationPlayer")
 	ap.play("attack")
 	get_parent().get_parent().addWait(ap.get_animation("attack").get_length())
-	__drain(1)
+	__drain(mCombatConsumption)
 
 
 func _applyAttack():

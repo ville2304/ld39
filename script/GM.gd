@@ -44,6 +44,7 @@ func getCell(cell):
 
 
 func kill(player):
+	# FIXME: These must be deferred as iterator is not reset
 	get_node("Players").remove_child(player)
 	mPlayers = get_node("Players").get_children()
 
@@ -87,6 +88,11 @@ func raycast(x0, y0, x1, y1, maxLength):
 
 func getTarget():
 	return mPlayers[0]
+
+
+func applyPowerSettings(settings):
+	mPlayers[0].applyPowerSettings(settings)
+	# TODO: Invoke global effects
 
 
 
@@ -136,7 +142,7 @@ func _nextLevel():
 
 func _ready():
 	mPressTime = -1
-	mCurrentLevel = 0
+	mCurrentLevel = 2
 	__reset()
 	mLevel.loadLevel(mCurrentLevel)
 	__startLevel()

@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://script/GM.gd" type="Script" id=1]
 [ext_resource path="res://script/Level.gd" type="Script" id=2]
+[ext_resource path="res://script/SwitchMenu.gd" type="Script" id=3]
+[ext_resource path="res://script/Ui.gd" type="Script" id=4]
 
 [sub_resource type="Animation" id=1]
 
@@ -69,5 +71,256 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
+
+[node name="SwitchMenu" type="Panel" parent="."]
+
+editor/display_folded = true
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+script/script = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="SwitchMenu"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 370.0
+margin/top = 52.0
+margin/right = 562.0
+margin/bottom = 80.0
+text = "System power settings"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SwCore" type="CheckButton" parent="SwitchMenu"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 314.0
+margin/top = 94.0
+margin/right = 555.0
+margin/bottom = 116.0
+toggle_mode = true
+is_pressed = true
+enabled_focus_mode = 2
+shortcut = null
+text = "Core"
+flat = false
+align = 2
+
+[node name="SwVisual" type="CheckButton" parent="SwitchMenu"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 314.0
+margin/top = 124.0
+margin/right = 555.0
+margin/bottom = 146.0
+toggle_mode = true
+is_pressed = true
+enabled_focus_mode = 2
+shortcut = null
+text = "Visual sensors"
+flat = false
+align = 2
+
+[node name="SwAudio" type="CheckButton" parent="SwitchMenu"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 314.0
+margin/top = 158.0
+margin/right = 555.0
+margin/bottom = 180.0
+toggle_mode = true
+is_pressed = true
+enabled_focus_mode = 2
+shortcut = null
+text = "Audio sensors"
+flat = false
+align = 2
+
+[node name="SwRepair" type="CheckButton" parent="SwitchMenu"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 314.0
+margin/top = 190.0
+margin/right = 555.0
+margin/bottom = 212.0
+toggle_mode = true
+is_pressed = true
+enabled_focus_mode = 2
+shortcut = null
+text = "Repair"
+flat = false
+align = 2
+
+[node name="SwLoco" type="CheckButton" parent="SwitchMenu"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 314.0
+margin/top = 253.0
+margin/right = 555.0
+margin/bottom = 275.0
+toggle_mode = true
+is_pressed = true
+enabled_focus_mode = 2
+shortcut = null
+text = "Locomotion"
+flat = false
+align = 2
+
+[node name="SwCombat" type="CheckButton" parent="SwitchMenu"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 314.0
+margin/top = 286.0
+margin/right = 555.0
+margin/bottom = 308.0
+toggle_mode = true
+is_pressed = true
+enabled_focus_mode = 2
+shortcut = null
+text = "Combat"
+flat = false
+align = 2
+
+[node name="Apply" type="Button" parent="SwitchMenu"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 315.0
+margin/top = 361.0
+margin/right = 412.0
+margin/bottom = 399.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Apply"
+flat = false
+
+[node name="Cancel" type="Button" parent="SwitchMenu"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 489.0
+margin/top = 362.0
+margin/right = 586.0
+margin/bottom = 400.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Cancel"
+flat = false
+
+[node name="Label 2" type="Label" parent="SwitchMenu"]
+
+rect/rotation = -90.0
+rect/scale = Vector2( 2, 2 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 599.0
+margin/top = 118.0
+margin/right = 639.0
+margin/bottom = 132.0
+text = "Static"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Ui" type="Control" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 40.0
+margin/bottom = 40.0
+script/script = ExtResource( 4 )
+
+[node name="LbPower" type="Label" parent="Ui"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 12.0
+margin/top = 10.0
+margin/right = 213.0
+margin/bottom = 35.0
+text = "Power"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="LbHealth" type="Label" parent="Ui"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 12.0
+margin/top = 30.0
+margin/right = 213.0
+margin/bottom = 55.0
+text = "Health"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Button" type="Button" parent="Ui"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 8.0
+margin/top = 50.0
+margin/right = 114.0
+margin/bottom = 70.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Power settings"
+flat = false
+
+[connection signal="pressed" from="SwitchMenu/Apply" to="SwitchMenu" method="_on_Apply_pressed"]
+
+[connection signal="pressed" from="SwitchMenu/Cancel" to="SwitchMenu" method="_on_Cancel_pressed"]
+
+[connection signal="pressed" from="Ui/Button" to="Ui" method="_on_Button_pressed"]
 
 
