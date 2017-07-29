@@ -1,14 +1,43 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://script/GM.gd" type="Script" id=1]
 [ext_resource path="res://script/Level.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+
+resource/name = "changeLevel"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath("GM")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0.5 ),
+"transitions": FloatArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_nextLevel"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera:transform/rotation")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 0.5, 1 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -60.5798, 0, 0 ), Vector3( 33.678, 0, 0 ), Vector3( -60.5798, 0, 0 ) ]
+}
 
 [node name="Node" type="Node"]
 
 [node name="Camera" type="Camera" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 1, 0, 0, 0, 0.491211, 0.871041, 0, -0.871041, 0.491211, 3.7868, 15.666, 13.8982 )
+transform/local = Transform( 1, 0, 0, 0, 0.49121, 0.871041, 0, -0.871041, 0.49121, 3.7868, 15.666, 13.8982 )
 projection = 0
 fov = 30.0
 near = 0.1
@@ -29,5 +58,16 @@ script/script = ExtResource( 1 )
 script/script = ExtResource( 2 )
 
 [node name="Players" type="Node" parent="GM"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/changeLevel = SubResource( 1 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
 
 

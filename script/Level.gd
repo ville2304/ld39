@@ -20,14 +20,27 @@ func isWalkable(cell):
 	return (mData[cell.x + mWidth * cell.y] == 0)
 
 
-func _ready():
+func reset():
+	for i in get_children():
+		remove_child(i)
+	mData = null
+	mPlayerStarts = null
+	mWidth = 0
+	mHeight = 0
+
+
+func loadLevel(l):
+	reset()
 	var q = Quad.new()
 	q.set_size(Vector2(.95, .95))
 	q.set_axis(1)
 	q.set_offset(Vector2(0.5, 0.5))
 	q.set_name("asd")
 	
-	var ls = LEVEL[0].strip_edges().split("\n")
+	if l >= LEVEL.size():
+		l = 0
+		
+	var ls = LEVEL[l].strip_edges().split("\n")
 	mWidth = ls[0].length()
 	mHeight = ls.size()
 	mData = IntArray()
@@ -55,10 +68,24 @@ func _ready():
 			var d = q.duplicate()
 			d.set_translation(Vector3(x, 0, y))
 			add_child(d)
-	
 
 
 const LEVEL = [
+"""
+1g1
+001
+101
+101
+00p
+""",
+"""
+1e01
+0110
+1110
+1101
+1011
+g00p
+""",
 """
 1111111111
 1e001g00p1
@@ -69,6 +96,18 @@ const LEVEL = [
 1000000001
 1111011111
 1e000000e1
+1111111111
+""",
+"""
+1111111111
+10001000p1
+1000100001
+1000100001
+1000100001
+1000g00001
+1000000001
+1111011111
+1e100000e1
 1111111111
 """
 ]

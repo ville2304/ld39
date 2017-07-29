@@ -29,6 +29,9 @@ func turn(command):
 	
 	if get_parent().get_parent().isGoal(getGrid()):
 		get_parent().get_parent().victory()
+		var ap = get_node("AnimationPlayer")
+		get_parent().get_parent().addWait(ap.get_animation("victory").get_length())
+		ap.play("victory")
 		return false
 	
 	if command == 0:

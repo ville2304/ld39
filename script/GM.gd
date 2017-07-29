@@ -19,6 +19,7 @@ var mIterator
 var mWait = 0
 var mCommand = Command.NONE
 var mVictory = false
+var mCurrentLevel
 
 
 func addWait(seconds):
@@ -85,11 +86,19 @@ func getTarget():
 
 
 
-
-
-func _ready():
-	var plrs = mLevel.getPlayerStarts()
+func __reset():
+	if mGoal != null:
+		remove_child(mGoal)
 	var pn = get_node("Players")
+	for i in pn.get_children():
+		pn.remove_child(i)
+	mPlayers = null
+	mLevel.reset()
+
+
+func __startLevel():
+	var pn = get_node("Players")
+	var plrs = mLevel.getPlayerStarts()
 	var user = preload("res://User.tscn")
 	var enemy = preload("res://Enemy.tscn")
 	for i in range(plrs.size()):
@@ -114,6 +123,20 @@ func _ready():
 	set_process(true)
 
 
+func _nextLevel():
+	mCurrentLevel += 1
+	__reset()
+	mLevel.loadLevel(mCurrentLevel)
+	__startLevel()
+
+
+func _ready():
+	mCurrentLevel = 0
+	__reset()
+	mLevel.loadLevel(mCurrentLevel)
+	__startLevel()
+
+
 func _process(delta):
 	if Input.is_key_pressed(KEY_UP):
 		mCommand = Command.NORTH
@@ -132,7 +155,7 @@ func _process(delta):
 		mWait -= delta
 	else:
 		if mVictory:
-			print("Victory!")
+			get_node("../AnimationPlayer").play("changeLevel")
 			set_process(false)
 			return
 		if mIterator >= mPlayers.size():
