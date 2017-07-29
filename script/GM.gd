@@ -24,6 +24,8 @@ var mVictory = false
 var mCurrentLevel
 var mTouchDown = Vector2()
 var mPressTime = 0
+var mGlitchPlayers = false
+
 
 
 func addWait(seconds):
@@ -93,10 +95,16 @@ func getTarget():
 func applyPowerSettings(settings):
 	mPlayers[0].applyPowerSettings(settings)
 	# TODO: Invoke global effects
-	if settings["visual"] != 0:
-		get_node("../CameraController").fix()
-	else:
+	get_node("../CameraController").fix()
+	mGlitchPlayers = false
+	for p in mPlayers:
+		p.show()
+	if settings["visual"] <= 2:
 		get_node("../CameraController").glitch()
+	if settings["visual"] <= 1:
+		print("Shader magic")
+	if settings["visual"] == 0:
+		mGlitchPlayers = true
 	
 	if settings["audio"] != 0:
 		get_node("../Music").set_volume(1)
@@ -221,3 +229,12 @@ func __newTurn():
 	mIterator = 0
 	mVictory = false
 	mCommand = Command.NONE
+	if mGlitchPlayers:
+		for p in mPlayers:
+			if randf() > 0.5:
+				p.hide()
+			else:
+				p.show()
+		mPlayers[0].show()
+	
+	

@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://script/Camera.gd" type="Script" id=1]
-[ext_resource path="res://script/GM.gd" type="Script" id=2]
-[ext_resource path="res://script/Level.gd" type="Script" id=3]
-[ext_resource path="res://script/SwitchMenu.gd" type="Script" id=4]
-[ext_resource path="res://script/Ui.gd" type="Script" id=5]
-[ext_resource path="res://music.ogg" type="AudioStream" id=6]
-[ext_resource path="res://music-glitch.ogg" type="AudioStream" id=7]
+[ext_resource path="res://noise.png" type="Texture" id=2]
+[ext_resource path="res://script/GM.gd" type="Script" id=3]
+[ext_resource path="res://script/Level.gd" type="Script" id=4]
+[ext_resource path="res://script/SwitchMenu.gd" type="Script" id=5]
+[ext_resource path="res://script/Ui.gd" type="Script" id=6]
+[ext_resource path="res://music.ogg" type="AudioStream" id=7]
+[ext_resource path="res://music-glitch.ogg" type="AudioStream" id=8]
 
 [sub_resource type="Animation" id=1]
 
@@ -42,12 +43,13 @@ tracks/1/keys = {
 [node name="CameraController" type="Spatial" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4181, 0, 0 )
 script/script = ExtResource( 1 )
 
 [node name="Camera" type="Camera" parent="CameraController"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 1, 0, 0, 0, 0.49121, 0.871041, 0, -0.871041, 0.49121, 0, 15.666, 9 )
+transform/local = Transform( 1, 0, 0, 0, 0.491211, 0.871041, 0, -0.871041, 0.491211, 0, 15.666, 9 )
 projection = 0
 fov = 30.0
 near = 0.1
@@ -59,13 +61,46 @@ environment = null
 h_offset = 0.0
 v_offset = 0.0
 
+[node name="TextureFrame" type="TextureFrame" parent="CameraController"]
+
+visibility/visible = false
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = -128.0
+margin/bottom = -128.0
+texture = ExtResource( 2 )
+stretch_mode = 2
+
+[node name="TextureFrame1" type="TextureFrame" parent="CameraController"]
+
+visibility/visible = false
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+size_flags/stretch_ratio = -1.0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = -128.0
+margin/bottom = -128.0
+texture = ExtResource( 2 )
+stretch_mode = 2
+
 [node name="GM" type="Node" parent="."]
 
-script/script = ExtResource( 2 )
+script/script = ExtResource( 3 )
 
 [node name="Level" type="Node" parent="GM"]
 
-script/script = ExtResource( 3 )
+script/script = ExtResource( 4 )
 
 [node name="Players" type="Node" parent="GM"]
 
@@ -82,7 +117,6 @@ autoplay = ""
 
 [node name="SwitchMenu" type="Panel" parent="."]
 
-editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -93,7 +127,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 0.0
 margin/bottom = 0.0
-script/script = ExtResource( 4 )
+script/script = ExtResource( 5 )
 
 [node name="Label" type="Label" parent="SwitchMenu"]
 
@@ -106,6 +140,21 @@ margin/top = 52.0
 margin/right = 562.0
 margin/bottom = 80.0
 text = "System power settings"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Label1" type="Label" parent="SwitchMenu"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 395.0
+margin/top = 127.0
+margin/right = 587.0
+margin/bottom = 155.0
+text = "Visual sensors"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -125,24 +174,6 @@ is_pressed = true
 enabled_focus_mode = 2
 shortcut = null
 text = "Core"
-flat = false
-align = 2
-
-[node name="SwVisual" type="CheckButton" parent="SwitchMenu"]
-
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 314.0
-margin/top = 124.0
-margin/right = 555.0
-margin/bottom = 146.0
-toggle_mode = true
-is_pressed = true
-enabled_focus_mode = 2
-shortcut = null
-text = "Visual sensors"
 flat = false
 align = 2
 
@@ -267,17 +298,38 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Ui" type="Control" parent="."]
+[node name="SwVisual" type="HSlider" parent="SwitchMenu"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 498.0
+margin/top = 128.0
+margin/right = 546.0
+margin/bottom = 144.0
+range/min = 0.0
+range/max = 3.0
+range/step = 1.0
+range/page = 0.0
+range/value = 3.0
+range/exp_edit = false
+range/rounded = false
+tick_count = 4
+ticks_on_borders = true
+focus_mode = 2
+
+[node name="Ui" type="Control" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
 margin/right = 40.0
 margin/bottom = 40.0
-script/script = ExtResource( 5 )
+script/script = ExtResource( 6 )
 
 [node name="LbPower" type="Label" parent="Ui"]
 
@@ -327,7 +379,7 @@ flat = false
 
 [node name="Music" type="StreamPlayer" parent="."]
 
-stream/stream = ExtResource( 6 )
+stream/stream = ExtResource( 7 )
 stream/play = false
 stream/loop = true
 stream/volume_db = 0.0
@@ -338,7 +390,7 @@ stream/buffering_ms = 500
 
 [node name="MusicGlitch" type="StreamPlayer" parent="."]
 
-stream/stream = ExtResource( 7 )
+stream/stream = ExtResource( 8 )
 stream/play = false
 stream/loop = true
 stream/volume_db = -80.0

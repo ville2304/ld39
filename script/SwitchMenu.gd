@@ -16,7 +16,8 @@ func _ready():
 
 func __restore():
 	mSwCore.set_pressed(true if mSettings["core"] > 0 else false)
-	mSwVisual.set_pressed(true if mSettings["visual"] > 0 else false)
+	#mSwVisual.set_pressed(true if mSettings["visual"] > 0 else false)
+	mSwVisual.set_val(mSettings["visual"])
 	mSwAudio.set_pressed(true if mSettings["audio"] > 0 else false)
 	mSwRepair.set_pressed(true if mSettings["repair"] > 0 else false)
 	mSwLoco.set_pressed(true if mSettings["loco"] > 0 else false)
@@ -30,7 +31,8 @@ func _on_Cancel_pressed():
 
 func _on_Apply_pressed():
 	mSettings["core"] = 3 if mSwCore.is_pressed() else 0
-	mSettings["visual"] = 3 if mSwVisual.is_pressed() else 0
+	#mSettings["visual"] = 3 if mSwVisual.is_pressed() else 0
+	mSettings["visual"] = mSwVisual.get_value()
 	mSettings["audio"] = 3 if mSwAudio.is_pressed() else 0
 	mSettings["repair"] = 3 if mSwRepair.is_pressed() else 0
 	mSettings["loco"] = 3 if mSwLoco.is_pressed() else 0
