@@ -127,8 +127,8 @@ func closeSwitch():
 	set_process(true)
 
 
-func resetLevel():
-	mCurrentLevel -= 1
+func resetLevel(l = mCurrentLevel):
+	mCurrentLevel = l - 1
 	get_node("../AnimationPlayer").play("changeLevel")
 	set_process(false)
 
