@@ -152,7 +152,7 @@ func __startLevel():
 	var pn = get_node("Players")
 	var plrs = mLevel.getPlayerStarts()
 	var user = preload("res://bot1.scn")
-	var enemy = preload("res://Enemy.tscn")
+	var enemy = preload("res://bot2.scn")
 	for i in range(plrs.size()):
 		var pos = plrs[i]
 		var n
