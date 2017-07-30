@@ -1,5 +1,9 @@
 extends Node
 
+const TILE_FLOOR = preload("res://tiles/floor.scn")
+const TILE_WALL = preload("res://tiles/wall.scn")
+
+
 var mWidth
 var mHeight
 var mData
@@ -39,11 +43,6 @@ func getCenter():
 
 func loadLevel(l):
 	reset()
-	var q = Quad.new()
-	q.set_size(Vector2(.95, .95))
-	q.set_axis(1)
-	q.set_offset(Vector2(0.5, 0.5))
-	q.set_name("asd")
 	
 	if l >= LEVEL.size():
 		l = l % LEVEL.size()
@@ -61,6 +60,9 @@ func loadLevel(l):
 			var d = ls[y][x]
 			if d == "1":
 				mData[x + mWidth * y] = 1
+				var d = TILE_WALL.instance()
+				d.set_translation(Vector3(x, 0, y))
+				add_child(d)
 				continue
 			elif d == "p":
 				d = 0
@@ -74,7 +76,7 @@ func loadLevel(l):
 			else:
 				d = 0
 			mData[x + mWidth * y] = d
-			var d = q.duplicate()
+			var d = TILE_FLOOR.instance()
 			d.set_translation(Vector3(x, 0, y))
 			add_child(d)
 
