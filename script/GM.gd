@@ -151,7 +151,7 @@ func __startLevel():
 	
 	var pn = get_node("Players")
 	var plrs = mLevel.getPlayerStarts()
-	var user = preload("res://User.tscn")
+	var user = preload("res://bot1.scn")
 	var enemy = preload("res://Enemy.tscn")
 	for i in range(plrs.size()):
 		var pos = plrs[i]
@@ -168,7 +168,7 @@ func __startLevel():
 	
 	var goalPos = mLevel.getGoal()
 	mGoal = MeshInstance.new()
-	mGoal.set_translation(Vector3(goalPos.x, 0, goalPos.y))
+	mGoal.set_translation(Vector3(goalPos.x - .5, 0, goalPos.y - .5))
 	mGoal.set_mesh(MESH_GOAL)
 	add_child(mGoal)
 	

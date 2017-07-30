@@ -35,7 +35,7 @@ tracks/1/keys = {
 "times": FloatArray( 0, 0.5, 1 ),
 "transitions": FloatArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( -60.5798, 0, 0 ), Vector3( 33.678, 0, 0 ), Vector3( -60.5798, 0, 0 ) ]
+"values": [ Vector3( -60.5798, 0, 0 ), Vector3( 6.84381, 0, 0 ), Vector3( -60.5798, 0, 0 ) ]
 }
 
 [sub_resource type="Environment" id=2]
@@ -86,7 +86,6 @@ srgb/enabled = false
 
 [node name="CameraController" type="Spatial" parent="."]
 
-editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4181, 0, 0 )
 script/script = ExtResource( 1 )
@@ -143,8 +142,10 @@ stretch_mode = 2
 
 script/script = ExtResource( 3 )
 
-[node name="Level" type="Node" parent="GM"]
+[node name="Level" type="Spatial" parent="GM"]
 
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5 )
 script/script = ExtResource( 4 )
 
 [node name="Players" type="Node" parent="GM"]

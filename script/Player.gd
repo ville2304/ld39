@@ -16,6 +16,7 @@ var mCombatLevel = 0
 
 func _ready():
 	get_node("/root/Node/Ui").setHealth(mHealth, 100)
+	get_node("AnimationPlayer").play("Idle-loop")
 
 
 func setPower(p):
@@ -45,8 +46,8 @@ func uke(dmg):
 	mHealth -= dmg
 	get_node("/root/Node/Ui").setHealth(mHealth, 100)
 	var ap = get_node("AnimationPlayer")
-	get_parent().get_parent().addWait(ap.get_animation("uke").get_length())
-	ap.play("uke")
+	get_parent().get_parent().addWait(ap.get_animation("Uke").get_length())
+	ap.play("Uke")
 
 
 func getGrid():
@@ -58,14 +59,20 @@ func turn(command):
 	if mHealth <= 0:
 		__die()
 		return true
+	var ap = get_node("AnimationPlayer")
 	if mPower <= 0:
+		ap.stop()
 		return true
+	#var ap = AnimationPlayer.new() #get_node("AnimationPlayer")
+	
+	if !ap.is_playing():
+		ap.play("Idle-loop")
 	
 	if get_parent().get_parent().isGoal(getGrid()):
 		get_parent().get_parent().victory()
 		var ap = get_node("AnimationPlayer")
-		get_parent().get_parent().addWait(ap.get_animation("victory").get_length())
-		ap.play("victory")
+		get_parent().get_parent().addWait(ap.get_animation("Victory").get_length())
+		ap.play("Victory")
 		prints("Total consumption", mTotalConsumption)
 		return false
 	
@@ -86,14 +93,19 @@ func turn(command):
 		return true
 	
 	var newPos = getGrid()
+	var dir
 	if command == 1:
 		newPos.y -= 1
+		dir = PI
 	elif command == 2:
 		newPos.y += 1
+		dir = 0
 	elif command == 3:
 		newPos.x -= 1
+		dir = PI * -.5
 	elif command == 4:
 		newPos.x += 1
+		dir = PI * .5
 	
 	var stuff = get_parent().get_parent().getCell(newPos)
 	if stuff[0]:
@@ -103,9 +115,11 @@ func turn(command):
 		if mLocoLevel > 0:
 			__drain(mLocoConsumption)
 			set_translation(Vector3(newPos.x, 0, newPos.y))
+			set_rotation(Vector3(0, dir, 0))
 			get_parent().get_parent().addWait(0.1)
 	else:
 		if stuff[1] != null && mCombatLevel > 0:
+			set_rotation(Vector3(0, dir, 0))
 			__attack(stuff[1])
 		else:
 			__drain(-mPassiveConsumption)
@@ -122,8 +136,8 @@ func __drain(amount):
 func __attack(target):
 	mTarget = target
 	var ap = get_node("AnimationPlayer")
-	ap.play("attack")
-	get_parent().get_parent().addWait(ap.get_animation("attack").get_length())
+	ap.play("Attack")
+	get_parent().get_parent().addWait(ap.get_animation("Attack").get_length())
 	__drain(mCombatConsumption)
 
 
@@ -135,8 +149,8 @@ func _applyAttack():
 func __die():
 	var ap = get_node("AnimationPlayer")
 	ap.connect("finished", self, "_applyDie", [], ap.CONNECT_ONESHOT)
-	ap.play("die")
-	get_parent().get_parent().addWait(ap.get_animation("die").get_length())
+	ap.play("Die")
+	get_parent().get_parent().addWait(ap.get_animation("Die").get_length())
 
 
 func _applyDie():
