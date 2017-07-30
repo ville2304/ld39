@@ -1,5 +1,7 @@
 extends Node
 
+const MESH_GOAL = preload("res://goal.msh")
+
 
 enum Command{
 	NONE,
@@ -165,9 +167,9 @@ func __startLevel():
 	mPlayers = pn.get_children()
 	
 	var goalPos = mLevel.getGoal()
-	mGoal = TestCube.new()
-	mGoal.set_translation(Vector3(goalPos.x + .5, 0.2, goalPos.y + .5))
-	mGoal.set_scale(Vector3(.3, .3, .3))
+	mGoal = MeshInstance.new()
+	mGoal.set_translation(Vector3(goalPos.x, 0, goalPos.y))
+	mGoal.set_mesh(MESH_GOAL)
 	add_child(mGoal)
 	
 	applyPowerSettings(DEFAULT_SETTINGS)
