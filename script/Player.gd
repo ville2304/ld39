@@ -82,10 +82,11 @@ func turn(command):
 		if randf() > 0.4:
 			command = round(rand_range(1, 6))
 	
-	__drain(mPassiveConsumption)
 	if command == 6:
+		__drain(round(mPassiveConsumption / 2))
 		get_parent().get_parent().openSwitch()
 		return true
+	__drain(mPassiveConsumption)
 	if command == 5:
 		if mHealth < 100:
 			mHealth += mRepairLevel
