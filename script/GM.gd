@@ -30,6 +30,7 @@ var mTouchDown = Vector2()
 var mPressTime = 0
 var mGlitchPlayers = false
 var mPowerSettings = DEFAULT_SETTINGS
+var mKillList
 
 
 func addWait(seconds):
@@ -50,9 +51,7 @@ func getCell(cell):
 
 
 func kill(player):
-	# FIXME: These must be deferred as iterator is not reset
-	get_node("Players").remove_child(player)
-	mPlayers = get_node("Players").get_children()
+	mKillList.push_back(player)
 
 
 func victory():
@@ -173,7 +172,7 @@ func __startLevel():
 	add_child(mGoal)
 	
 	applyPowerSettings(DEFAULT_SETTINGS)
-	
+	mKillList = []
 	__newTurn()
 	set_process(true)
 
@@ -250,11 +249,23 @@ func _process(delta):
 			return
 		if mIterator >= mPlayers.size():
 			__newTurn()
+		
+		for p in mKillList:
+			if mPlayers[mIterator] == p:
+				mIterator += 1
+				if mIterator >= mPlayers.size():
+					break
+		
 		if mPlayers[mIterator].turn(mCommand):
 			mIterator += 1
 
 
 func __newTurn():
+	var pn = get_node("Players")
+	for p in mKillList:
+		pn.remove_child(p)
+	mPlayers = pn.get_children()
+	mKillList = []
 	mIterator = 0
 	mVictory = false
 	mCommand = Command.NONE
