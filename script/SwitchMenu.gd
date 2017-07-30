@@ -1,11 +1,11 @@
 extends Panel
 
-onready var mSwCore = get_node("SwCore")
-onready var mSwVisual = get_node("SwVisual")
-onready var mSwAudio = get_node("SwAudio")
-onready var mSwRepair = get_node("SwRepair")
-onready var mSwLoco = get_node("SwLoco")
-onready var mSwCombat = get_node("SwCombat")
+onready var mSwCore = get_node("Panel/SwCore")
+onready var mSwVisual = get_node("Panel/SwVisual")
+onready var mSwAudio = get_node("Panel/SwAudio")
+onready var mSwRepair = get_node("Panel/SwRepair")
+onready var mSwLoco = get_node("Panel/SwLoco")
+onready var mSwCombat = get_node("Panel/SwCombat")
 
 
 func __restore(settings):

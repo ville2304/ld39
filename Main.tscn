@@ -253,8 +253,8 @@ flat = false
 
 [node name="SwitchMenu" type="Panel" parent="."]
 
-editor/display_folded = true
 visibility/visible = false
+visibility/self_opacity = 0.5
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -267,32 +267,45 @@ margin/right = 0.0
 margin/bottom = 0.0
 script/script = ExtResource( 7 )
 
-[node name="Label" type="Label" parent="SwitchMenu"]
+[node name="Panel" type="Panel" parent="SwitchMenu"]
+
+anchor/left = 3
+anchor/right = 3
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 172.0
+margin/top = 71.0
+margin/right = -231.0
+margin/bottom = 513.0
+
+[node name="Label" type="Label" parent="SwitchMenu/Panel"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 370.0
-margin/top = 52.0
-margin/right = 562.0
-margin/bottom = 80.0
+margin/left = 115.0
+margin/top = 28.0
+margin/right = 307.0
+margin/bottom = 56.0
 custom_fonts/font = ExtResource( 6 )
 text = "System power settings"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Label1" type="Label" parent="SwitchMenu"]
+[node name="Label1" type="Label" parent="SwitchMenu/Panel"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 293.0
-margin/top = 127.0
-margin/right = 485.0
-margin/bottom = 155.0
+margin/left = 38.0
+margin/top = 121.0
+margin/right = 230.0
+margin/bottom = 149.0
 custom_fonts/font = ExtResource( 6 )
 text = "Visual sensors"
 align = 2
@@ -300,16 +313,16 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="SwCore" type="CheckButton" parent="SwitchMenu"]
+[node name="SwCore" type="CheckButton" parent="SwitchMenu/Panel"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 314.0
-margin/top = 94.0
-margin/right = 555.0
-margin/bottom = 116.0
+margin/left = 59.0
+margin/top = 88.0
+margin/right = 300.0
+margin/bottom = 114.0
 custom_fonts/font = ExtResource( 6 )
 toggle_mode = true
 is_pressed = true
@@ -319,16 +332,16 @@ text = "Core"
 flat = false
 align = 2
 
-[node name="SwVisual" type="HSlider" parent="SwitchMenu"]
+[node name="SwVisual" type="HSlider" parent="SwitchMenu/Panel"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 498.0
-margin/top = 128.0
-margin/right = 546.0
-margin/bottom = 144.0
+margin/left = 243.0
+margin/top = 122.0
+margin/right = 291.0
+margin/bottom = 138.0
 range/min = 0.0
 range/max = 3.0
 range/step = 1.0
@@ -340,16 +353,16 @@ tick_count = 4
 ticks_on_borders = true
 focus_mode = 2
 
-[node name="SwAudio" type="CheckButton" parent="SwitchMenu"]
+[node name="SwAudio" type="CheckButton" parent="SwitchMenu/Panel"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 314.0
-margin/top = 158.0
-margin/right = 555.0
-margin/bottom = 180.0
+margin/left = 59.0
+margin/top = 152.0
+margin/right = 300.0
+margin/bottom = 178.0
 custom_fonts/font = ExtResource( 6 )
 toggle_mode = true
 is_pressed = true
@@ -359,16 +372,16 @@ text = "Audio sensors"
 flat = false
 align = 2
 
-[node name="SwRepair" type="CheckButton" parent="SwitchMenu"]
+[node name="SwRepair" type="CheckButton" parent="SwitchMenu/Panel"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 314.0
-margin/top = 190.0
-margin/right = 555.0
-margin/bottom = 212.0
+margin/left = 59.0
+margin/top = 184.0
+margin/right = 300.0
+margin/bottom = 210.0
 custom_fonts/font = ExtResource( 6 )
 toggle_mode = true
 is_pressed = true
@@ -378,16 +391,16 @@ text = "Repair"
 flat = false
 align = 2
 
-[node name="SwLoco" type="CheckButton" parent="SwitchMenu"]
+[node name="SwLoco" type="CheckButton" parent="SwitchMenu/Panel"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 314.0
-margin/top = 253.0
-margin/right = 555.0
-margin/bottom = 275.0
+margin/left = 59.0
+margin/top = 247.0
+margin/right = 300.0
+margin/bottom = 273.0
 custom_fonts/font = ExtResource( 6 )
 toggle_mode = true
 is_pressed = true
@@ -397,16 +410,16 @@ text = "Movement"
 flat = false
 align = 2
 
-[node name="SwCombat" type="CheckButton" parent="SwitchMenu"]
+[node name="SwCombat" type="CheckButton" parent="SwitchMenu/Panel"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 314.0
-margin/top = 286.0
-margin/right = 555.0
-margin/bottom = 308.0
+margin/left = 59.0
+margin/top = 280.0
+margin/right = 300.0
+margin/bottom = 306.0
 custom_fonts/font = ExtResource( 6 )
 toggle_mode = true
 is_pressed = true
@@ -416,16 +429,16 @@ text = "Combat"
 flat = false
 align = 2
 
-[node name="Apply" type="Button" parent="SwitchMenu"]
+[node name="Apply" type="Button" parent="SwitchMenu/Panel"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 447.0
-margin/top = 362.0
-margin/right = 544.0
-margin/bottom = 400.0
+margin/left = 164.0
+margin/top = 348.0
+margin/right = 261.0
+margin/bottom = 386.0
 custom_fonts/font = ExtResource( 6 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -433,7 +446,7 @@ shortcut = null
 text = "Apply"
 flat = false
 
-[node name="Cancel" type="Button" parent="SwitchMenu"]
+[node name="Cancel" type="Button" parent="SwitchMenu/Panel"]
 
 visibility/visible = false
 focus/ignore_mouse = false
@@ -450,17 +463,17 @@ shortcut = null
 text = "Cancel"
 flat = false
 
-[node name="Label 2" type="Label" parent="SwitchMenu"]
+[node name="Label 2" type="Label" parent="SwitchMenu/Panel"]
 
 rect/rotation = -90.0
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 599.0
-margin/top = 118.0
-margin/right = 698.0
-margin/bottom = 153.0
+margin/left = 344.0
+margin/top = 112.0
+margin/right = 443.0
+margin/bottom = 147.0
 custom_fonts/font = ExtResource( 8 )
 text = "Static"
 percent_visible = 1.0
@@ -520,7 +533,6 @@ shadow/zoffset_scale = 2.0
 
 [node name="MainMenu" type="Panel" parent="."]
 
-visibility/visible = false
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -618,9 +630,9 @@ max_lines_visible = -1
 
 [connection signal="pressed" from="Ui/BtnReset" to="Ui" method="_on_BtnReset_pressed"]
 
-[connection signal="pressed" from="SwitchMenu/Apply" to="SwitchMenu" method="_on_Apply_pressed"]
+[connection signal="pressed" from="SwitchMenu/Panel/Apply" to="SwitchMenu" method="_on_Apply_pressed"]
 
-[connection signal="pressed" from="SwitchMenu/Cancel" to="SwitchMenu" method="_on_Cancel_pressed"]
+[connection signal="pressed" from="SwitchMenu/Panel/Cancel" to="SwitchMenu" method="_on_Cancel_pressed"]
 
 [connection signal="pressed" from="MainMenu/Button" to="MainMenu" method="_on_Button_pressed"]
 
