@@ -165,6 +165,7 @@ autoplay = ""
 
 [node name="Ui" type="Control" parent="."]
 
+editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = true
@@ -480,7 +481,7 @@ environment = SubResource( 2 )
 [node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 0.686762, -0.718953, 0.107071, 0, 0.147302, 0.989092, -0.726882, -0.679271, 0.101161, 0, 0, 24.8359 )
+transform/local = Transform( 0.468171, -0.874944, -0.123651, 0.711525, 0.290295, 0.639892, -0.523974, -0.38756, 0.758452, 0, 0, 24.8359 )
 layers = 1
 params/enabled = true
 params/editor_only = false
