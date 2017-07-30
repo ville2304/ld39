@@ -186,7 +186,7 @@ func _nextLevel():
 
 func _ready():
 	mPressTime = -1
-	mCurrentLevel = 4
+	mCurrentLevel = 0
 	__reset()
 	mLevel.loadLevel(mCurrentLevel)
 	__startLevel()
